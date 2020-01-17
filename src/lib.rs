@@ -5,3 +5,4 @@ extern crate lazy_static;
 #[macro_use]
 pub mod commands;
 pub mod examples;
+pub mod utils;

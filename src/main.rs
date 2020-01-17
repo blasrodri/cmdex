@@ -1,12 +1,14 @@
 extern crate lazy_static;
 
 use command_examples::examples::*;
+use command_examples::utils::display::{DisplayFormat};
 
 fn main() {
     let user_input = "tar"; //mock
+    let display_format = DisplayFormat::ASCII;
     match user_input {
-        "find" => find::examples(),
-        "tar" => tar::examples(),
+        "find" => find::examples(&display_format),
+        "tar" => tar::examples(&display_format),
         _ => println!("Not matched")
     }
 }

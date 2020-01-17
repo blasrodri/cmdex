@@ -1,6 +1,6 @@
 use crate::commands::command::*;
+use crate::utils::display::{DisplayFormat, display};
 
-use serde_json;
 
 lazy_static! {
     pub static ref EXAMPLES: Vec<CommandExample<'static>> = {
@@ -23,9 +23,7 @@ lazy_static! {
     };
 }
 
-pub fn examples() -> () {
+pub fn examples(display_format: &DisplayFormat) -> () {
     EXAMPLES.iter()
-    .for_each(
-        |cmd_ex| println!("{}", serde_json::to_string_pretty(cmd_ex).unwrap())
-    )
+    .for_each(|cmd_ex| display(cmd_ex, &display_format))
 }
