@@ -6,13 +6,13 @@ lazy_static! {
     pub static ref EXAMPLES: Vec<CommandExample<'static>> = {
         vec![
             command_example!(
-                command!("find", "find all rust files and apply rust fmt"),
+                command!("tar", "compress an entire directory"),
                 synopsis!(
                     vec![
                         command_options!(
                             vec![
-                                flag_plus_value!(flag!("--", "name"), "*.rs"),
-                                flag_plus_value!(flag!("-", "exec"), "cargo fmt {} \\;"),
+                                flag_plus_value!(flag!("-", "zcvf"), "[result-filename.tar.gz]"),
+                                flag_plus_value!(flag!("", ""), "[path-of-directory-to-compress]"),
                             ]
                         ),
                     ]

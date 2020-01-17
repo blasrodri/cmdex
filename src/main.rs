@@ -1,11 +1,12 @@
 extern crate lazy_static;
 
-use command_examples::examples::find;
+use command_examples::examples::*;
 
 fn main() {
-    let user_input = "find"; //mock
+    let user_input = "tar"; //mock
     match user_input {
-        "find" => find::find(),
+        "find" => find::examples(),
+        "tar" => tar::examples(),
         _ => println!("Not matched")
     }
 }
