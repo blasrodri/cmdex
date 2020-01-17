@@ -1,23 +1,11 @@
-#[macro_use]
+extern crate lazy_static;
 
-mod commands;
-use commands::command::*;
+use command_examples::examples::find;
 
 fn main() {
-        println!(
-            "{:#?}",
-            command_example!(
-                command!("find", "search for files in a directory hierarchy"),
-                synopsis!(
-                    &[
-                        command_options!(
-                            &[
-                                flag_plus_value!(flag!("", "find"), ""),
-                                flag_plus_value!(flag!("--", "find"), "*.rs"),
-                            ]
-                        ),
-                    ]
-                )
-            )
-        );
+    let user_input = "find"; //mock
+    match user_input {
+        "find" => find::find(),
+        _ => println!("Not matched")
+    }
 }

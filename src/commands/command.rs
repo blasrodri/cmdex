@@ -1,32 +1,34 @@
-#[derive(Debug, PartialEq)]
+use serde::{Serialize};
+
+#[derive(Debug, Serialize, PartialEq)]
 pub struct CommandExample<'a> {
-    pub command: &'a Command<'a>,
-    pub synopsis: &'a Synopsis<'a>,
+    pub command: Command<'a>,
+    pub synopsis: Synopsis<'a>,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Serialize, PartialEq)]
 pub struct Command<'a> {
     pub name: &'a str,
     pub description: &'a str,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Serialize, PartialEq)]
 pub struct Synopsis<'a> {
-    pub command_options: &'a [CommandOptions<'a>],
+    pub command_options: Vec<CommandOptions<'a>>,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Serialize, PartialEq)]
 pub struct CommandOptions<'a> {
-    pub flag_values: &'a [FlagPlusValue<'a>],
+    pub flag_values: Vec<FlagPlusValue<'a>>,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Serialize, PartialEq)]
 pub struct Flag<'a> {
     pub prefix: Option<&'a str>,
     pub name: &'a str
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Serialize, PartialEq)]
 pub struct FlagPlusValue<'a> {
     pub flag: Flag<'a>, 
     pub value: Option<&'a str>,
@@ -38,14 +40,8 @@ impl<'a> Flag<'a> {
     }
 }
 
-impl<'a> Into<(Flag<'a>, Option<&'a str>)> for FlagPlusValue<'a> {
-    fn into(self) -> (Flag<'a>, Option<&'a str>) {
-        (self.flag, self.value)
-    }
-}
-
 macro_rules! command {
-    ($name: expr, $description: expr) => { &Command {name: $name, description: $description}};
+    ($name: expr, $description: expr) => { Command {name: $name, description: $description}};
 }
 
 macro_rules! flag {
@@ -63,7 +59,7 @@ macro_rules! command_options {
 }
 
 macro_rules! synopsis {
-    ($command_options: expr) => { &Synopsis { command_options: $command_options } };
+    ($command_options: expr) => { Synopsis { command_options: $command_options } };
 }
 
 macro_rules! command_example {
@@ -78,7 +74,7 @@ mod test {
     fn test_command_macro() {
         assert_eq!(
             command!("find", "search for files in a directory hierarchy"),
-            &Command {name: "find", description: "search for files in a directory hierarchy"}
+            Command {name: "find", description: "search for files in a directory hierarchy"}
         );
     }
 
@@ -99,13 +95,13 @@ mod test {
     fn test_command_options_macro() {
         assert_eq!(
             command_options!(
-                &[
+                vec![
                     flag_plus_value!(flag!("", "find"), ""),
                     flag_plus_value!(flag!("--", "find"), "*.rs"),
                 ]
             ),
             CommandOptions {
-                flag_values: &[
+                flag_values: vec![
                     FlagPlusValue{flag: flag!("", "find"), value: None },
                     FlagPlusValue{flag: flag!("--", "find"), value: Some("*.rs") },
                     ]
@@ -117,19 +113,19 @@ mod test {
     fn test_synopsis_macro() {
         assert_eq!(
             synopsis!(
-                &[
+                vec![
                     command_options!(
-                        &[
+                        vec![
                             flag_plus_value!(flag!("", "find"), ""),
                             flag_plus_value!(flag!("--", "find"), "*.rs"),
                         ]
                     ),
                 ]
             ),
-            &Synopsis {
-                command_options: &[
+            Synopsis {
+                command_options: vec![
                     CommandOptions {
-                        flag_values: &[
+                        flag_values: vec![
                             FlagPlusValue{flag: flag!("", "find"), value: None },
                             FlagPlusValue{flag: flag!("--", "find"), value: Some("*.rs") },
                             ]
@@ -145,9 +141,9 @@ mod test {
             command_example!(
                 command!("find", "search for files in a directory hierarchy"),
                 synopsis!(
-                    &[
+                    vec![
                         command_options!(
-                            &[
+                            vec![
                                 flag_plus_value!(flag!("", "find"), ""),
                                 flag_plus_value!(flag!("--", "find"), "*.rs"),
                             ]
@@ -156,12 +152,12 @@ mod test {
                 )
             ),
             CommandExample {
-                command: &Command {name: "find", description: "search for files in a directory hierarchy"},
+                command: Command {name: "find", description: "search for files in a directory hierarchy"},
                 synopsis:
-                    &Synopsis {
-                        command_options: &[
+                    Synopsis {
+                        command_options: vec![
                             CommandOptions {
-                                flag_values: &[
+                                flag_values: vec![
                                     FlagPlusValue{flag: flag!("", "find"), value: None },
                                     FlagPlusValue{flag: flag!("--", "find"), value: Some("*.rs") },
                                     ]
