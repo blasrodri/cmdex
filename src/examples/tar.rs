@@ -5,6 +5,7 @@ use crate::utils::display::{DisplayFormat, display};
 lazy_static! {
     pub static ref EXAMPLES: Vec<CommandExample<'static>> = {
         vec![
+            /*
             command_example!(
                 command!("tar", "compress an entire directory"),
                 synopsis!(
@@ -18,7 +19,7 @@ lazy_static! {
                     ]
                 )
             ),
-
+            */
         ]
     };
 }

@@ -4,7 +4,7 @@ use command_examples::examples::*;
 use command_examples::utils::display::{DisplayFormat};
 
 fn main() {
-    let user_input = "tar"; //mock
+    let user_input = "find"; //mock
     let display_format = DisplayFormat::ASCII;
     match user_input {
         "find" => find::examples(&display_format),
