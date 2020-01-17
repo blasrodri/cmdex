@@ -15,7 +15,8 @@ fn display_ascii<'a>(ce: &CommandExample<'a>) -> String {
     let command_options_str = command_options_display_ascii(&command_options[..]);
     format!(
         r#"{} - {}
-{} {}"#,
+{} {}
+"#,
         name, description, name, command_options_str
     )
 }
@@ -88,7 +89,8 @@ mod test {
             }"#;
 
         let expected_result = r#"tar - compress an entire directory
-tar -zvcf [result-filename.tar.gz] [path-of-directory-to-compress]"#;
+tar -zvcf [result-filename.tar.gz] [path-of-directory-to-compress]
+"#;
         assert_eq!(
             display_ascii(&serde_json::from_str(command_example).unwrap()),
             expected_result

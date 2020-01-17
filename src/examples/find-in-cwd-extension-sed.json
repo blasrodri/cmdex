@@ -7,7 +7,7 @@
         "command_options": [
             {
                 "flag_values": [
-                    { "flag": {}, "value": "`$(pwd)`"},
+                    { "flag": {}, "value": "$(pwd)"},
                     { "flag": {"prefix": "-", "name": "name"}, "value": "*.txt"},
                     { "flag": {"prefix": "-", "name": "exec"}, "value": "sed -i 's/foo/bar/g' {} + "}
                 ]
