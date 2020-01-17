@@ -1,35 +1,35 @@
 #[derive(Debug, PartialEq)]
 pub struct CommandExample<'a> {
-    command: &'a Command<'a>,
-    synopsis: &'a Synopsis<'a>,
+    pub command: &'a Command<'a>,
+    pub synopsis: &'a Synopsis<'a>,
 }
 
 #[derive(Debug, PartialEq)]
 pub struct Command<'a> {
-    name: &'a str,
-    description: &'a str,
+    pub name: &'a str,
+    pub description: &'a str,
 }
 
 #[derive(Debug, PartialEq)]
 pub struct Synopsis<'a> {
-    command_options: &'a [CommandOptions<'a>],
+    pub command_options: &'a [CommandOptions<'a>],
 }
 
 #[derive(Debug, PartialEq)]
 pub struct CommandOptions<'a> {
-    flag_values: &'a [FlagPlusValue<'a>],
+    pub flag_values: &'a [FlagPlusValue<'a>],
 }
 
 #[derive(Debug, PartialEq)]
 pub struct Flag<'a> {
-    prefix: Option<&'a str>,
-    name: &'a str
+    pub prefix: Option<&'a str>,
+    pub name: &'a str
 }
 
 #[derive(Debug, PartialEq)]
-struct FlagPlusValue<'a> {
-    flag: Flag<'a>, 
-    value: Option<&'a str>,
+pub struct FlagPlusValue<'a> {
+    pub flag: Flag<'a>, 
+    pub value: Option<&'a str>,
 }
 
 impl<'a> Flag<'a> {
@@ -44,14 +44,8 @@ impl<'a> Into<(Flag<'a>, Option<&'a str>)> for FlagPlusValue<'a> {
     }
 }
 
-impl<'a> FlagPlusValue<'a> {
-    pub fn new(flag: Flag<'a>, value: Option<&'a str>) -> FlagPlusValue<'a> {
-        FlagPlusValue {flag, value}
-    }
-}
-
 macro_rules! command {
-    ($name: expr, $description: expr) => { Command {name: $name, description: $description}};
+    ($name: expr, $description: expr) => { &Command {name: $name, description: $description}};
 }
 
 macro_rules! flag {
@@ -69,11 +63,11 @@ macro_rules! command_options {
 }
 
 macro_rules! synopsis {
-    ($command_options: expr) => { Synopsis { command_options: $command_options } };
+    ($command_options: expr) => { &Synopsis { command_options: $command_options } };
 }
 
 macro_rules! command_example {
-    ($command: expr, $synopsis: expr) => { CommandExample { command: &$command, synopsis: &$synopsis } };
+    ($command: expr, $synopsis: expr) => { CommandExample { command: $command, synopsis: $synopsis } };
 }
 
 
@@ -84,7 +78,7 @@ mod test {
     fn test_command_macro() {
         assert_eq!(
             command!("find", "search for files in a directory hierarchy"),
-            Command {name: "find", description: "search for files in a directory hierarchy"}
+            &Command {name: "find", description: "search for files in a directory hierarchy"}
         );
     }
 
@@ -132,7 +126,7 @@ mod test {
                     ),
                 ]
             ),
-            Synopsis {
+            &Synopsis {
                 command_options: &[
                     CommandOptions {
                         flag_values: &[
