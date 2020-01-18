@@ -10,7 +10,7 @@ use std::io::Read;
 #[cfg(test)]
 #[test]
 fn load_examples_and_check_no_panic_on_deserialization() {
-    let entries = fs::read_dir("./src/examples/")
+    let entries = fs::read_dir("./src/examples/examples-data/")
         .unwrap()
         .map(|res| res.unwrap().path())
         .collect::<Vec<_>>();
