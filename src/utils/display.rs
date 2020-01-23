@@ -2,9 +2,12 @@ use crate::commands::command::{
     Command, CommandExample, CommandOptions, Flag, FlagPlusValue, Synopsis,
 };
 
-pub enum DisplayFormat {
-    ASCII,
-    JSON,
+arg_enum!{
+    #[derive(PartialEq, Debug)]
+    pub enum DisplayFormat {
+        ASCII,
+        JSON,
+    }
 }
 
 fn display_ascii<'a>(ce: &CommandExample<'a>) -> String {
