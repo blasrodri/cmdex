@@ -1,7 +1,8 @@
 use std::fs;
+use std::io::Read;
 
 fn get_base_dir() -> &'static str {
-    const BASE_DIR: &'static str = "./src/examples/examples-data/";
+    const BASE_DIR: &str = "./src/examples/examples-data/";
     BASE_DIR
 }
 
@@ -12,11 +13,10 @@ pub fn load_json_file_paths(command_name: Option<&str>) -> Vec<String> {
 fn load_file_paths(command_name: Option<&str>, extension: &str, base_dir: &str) -> Vec<String> {
     // Horrible way out for not using a walkdir dependency
     // It assumes that the max level of depth is 2.
-    if let None = command_name {
+    if command_name.is_none() {
         return fs::read_dir(&base_dir)
             .expect(&format!("Could not open dir {}", &base_dir)[..])
             .map(|res| res.unwrap().path())
-            .map(|p| dbg!(p))
             .collect::<Vec<_>>()
             .iter()
             .map(|p| {
@@ -39,7 +39,6 @@ fn load_file_paths(command_name: Option<&str>, extension: &str, base_dir: &str) 
         .map(|res| res.unwrap().path())
         .collect::<Vec<_>>()
         .iter()
-        // .map(|p| dbg!((command_name, p)))
         .filter(|p| p.as_path().is_file())
         .filter(|p| match p.to_str().map(|s| s.ends_with(extension)) {
             Some(v) => v,
@@ -47,6 +46,18 @@ fn load_file_paths(command_name: Option<&str>, extension: &str, base_dir: &str) 
         })
         // convert path buff to string
         .map(|p| p.to_str().unwrap().to_string())
+        .collect::<Vec<_>>()
+}
+pub fn load_command_examples_content(list_json_paths: &[String]) -> Vec<String> {
+    list_json_paths
+        .iter()
+        .map(|json| {
+            let mut contents = String::new();
+            let file = fs::File::open(json).unwrap();
+            let mut buf_reader = std::io::BufReader::new(file);
+            buf_reader.read_to_string(&mut contents).unwrap();
+            contents
+        })
         .collect::<Vec<_>>()
 }
 

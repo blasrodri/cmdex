@@ -1,5 +1,7 @@
+use crate::commands::command::CommandExample;
 use crate::examples::*;
-use crate::utils::display::DisplayFormat;
+use crate::query::fuzzy_search::fuzzy_search;
+use crate::utils::display::{display, DisplayFormat};
 
 use clap::{App, Arg};
 
@@ -29,8 +31,9 @@ pub fn run() {
     let command_name = matches.value_of("COMMAND_NAME");
     let query_fuzzy = matches.value_of("query");
     match (command_name, query_fuzzy) {
+        (Some(cmd_opt), Some(fuzzy_query)) => find_examples_fuzzy(fuzzy_query, Some(cmd_opt)),
+        (None, Some(fuzzy_query)) => find_examples_fuzzy(fuzzy_query, None),
         (Some(cmd), _) => find_examples(cmd),
-        (_, Some(fuzzy_query)) => find_examples_fuzzy(fuzzy_query),
         _ => eprintln!("Unrecognized command. Run command_examples --help for more information."),
     }
 }
@@ -45,6 +48,9 @@ fn find_examples(command_name: &str) {
     }
 }
 
-fn find_examples_fuzzy(_command_name: &str) {
-    unimplemented!()
+fn find_examples_fuzzy(query: &str, command_name: Option<&str>) {
+    let display_format = DisplayFormat::ASCII;
+    fuzzy_search(query, command_name)
+        .iter()
+        .for_each(|s| display(&command_example!(&s[..]), &display_format))
 }

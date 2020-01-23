@@ -3,10 +3,11 @@ extern crate serde;
 extern crate serde_json;
 #[macro_use]
 extern crate lazy_static;
+extern crate fuzzy_matcher;
 
-pub mod cli;
 #[macro_use]
 pub mod commands;
+pub mod cli;
 pub mod examples;
-pub mod utils;
 pub mod query;
+pub mod utils;
