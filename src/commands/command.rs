@@ -48,6 +48,7 @@ impl<'a> From<&'a str> for CommandExample<'a> {
     }
 }
 
+#[macro_export]
 macro_rules! command_example {
     ($e: expr) => {
         CommandExample::from(&$e[..])
