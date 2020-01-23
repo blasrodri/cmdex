@@ -9,3 +9,4 @@ pub mod cli;
 pub mod commands;
 pub mod examples;
 pub mod utils;
+pub mod query;
