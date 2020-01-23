@@ -1,0 +1,25 @@
+{
+  "command": {
+    "name": "grep",
+    "description": "Grep recursively in all directories and subdirectories",
+    "platform": [
+      "Linux",
+      "Solaris"
+    ]
+  },
+  "synopsis": {
+    "command_options": [
+      {
+        "flag_values": [
+          {
+            "flag": {
+              "prefix": "-",
+              "name": "r"
+            },
+            "value": "foo"
+          }
+        ]
+      }
+    ]
+  }
+}
