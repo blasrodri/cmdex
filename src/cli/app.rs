@@ -26,7 +26,7 @@ pub fn run() {
                 .possible_values(&DisplayFormat::variants())
                 .case_insensitive(true)
                 .help("Select a display format: ")
-                .takes_value(true)
+                .takes_value(true),
         )
         .arg(
             Arg::with_name("COMMAND_NAME")
@@ -46,7 +46,9 @@ pub fn run() {
         _ => DisplayFormat::ASCII,
     };
     match (command_name, query_fuzzy) {
-        (Some(cmd_opt), Some(fuzzy_query)) => find_examples_fuzzy(fuzzy_query, Some(cmd_opt), &display_format),
+        (Some(cmd_opt), Some(fuzzy_query)) => {
+            find_examples_fuzzy(fuzzy_query, Some(cmd_opt), &display_format)
+        }
         (None, Some(fuzzy_query)) => find_examples_fuzzy(fuzzy_query, None, &display_format),
         (Some(cmd), _) => find_examples(cmd, &display_format),
         _ => eprintln!("Unrecognized command. Run command_examples --help for more information."),

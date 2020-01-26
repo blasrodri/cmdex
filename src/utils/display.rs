@@ -1,8 +1,5 @@
-use crate::commands::command::{
-    Command, CommandExample, CommandOptions, Flag, FlagPlusValue, Synopsis,
-};
-
-arg_enum!{
+use crate::commands::command::CommandExample;
+arg_enum! {
     #[derive(PartialEq, Debug)]
     pub enum DisplayFormat {
         ASCII,
@@ -12,15 +9,30 @@ arg_enum!{
 
 fn display_ascii<'a>(ce: &CommandExample<'a>) -> String {
     let CommandExample {
-        command: Command { name, description },
-        synopsis: Synopsis { command_options },
+        name,
+        description,
+        value,
+        platforms,
     } = ce;
-    let command_options_str = command_options_display_ascii(&command_options[..]);
+    let platforms_str = if platforms.is_none() {
+        "all".to_string()
+    } else {
+        platforms
+            .clone()
+            .unwrap()
+            .iter()
+            .fold(String::from(""), |mut acc, s| {
+                acc.push_str(" ");
+                acc.push_str(&s[..]);
+                acc
+            })
+    };
     format!(
         r#"{} - {}
-{} {}
+Platforms: {}
+{}
 "#,
-        name, description, name, command_options_str
+        name, description, platforms_str, value
     )
 }
 
@@ -35,39 +47,6 @@ pub fn display<'a>(ce: &CommandExample<'a>, display_format: &DisplayFormat) {
     }
 }
 
-fn command_options_display_ascii(command_options: &[CommandOptions]) -> String {
-    command_options
-        .iter()
-        .map(|co| {
-            co.flag_values
-                .iter()
-                .map(flag_plus_value_display_ascii)
-                .fold("".to_string(), |mut acc, x| {
-                    acc.push_str(&x[..]);
-                    acc
-                })
-        })
-        .fold("".to_string(), |mut acc, x| {
-            acc.push_str(&x[..]);
-            acc
-        })
-        .trim_end()
-        .to_string()
-}
-
-fn flag_plus_value_display_ascii(flag_plus_value: &FlagPlusValue) -> String {
-    let FlagPlusValue {
-        flag: Flag { prefix, name },
-        value,
-    } = flag_plus_value;
-    format!(
-        "{}{}{}",
-        prefix.map_or_else(|| "".to_string(), |p| p.to_string()),
-        name.map_or_else(|| "".to_string(), |p| format!("{} ", p.to_string())),
-        value.map_or_else(|| "".to_string(), |p| format!("{} ", p.to_string()))
-    )
-}
-
 #[cfg(test)]
 mod test {
     use super::*;
@@ -75,23 +54,13 @@ mod test {
     #[test]
     fn test_display_ascii() {
         let command_example = r#"{
-                "command": {
                     "name": "tar",
-                    "description": "compress an entire directory"
-                },
-                "synopsis": {
-                    "command_options": [
-                        {
-                            "flag_values": [
-                                { "flag": {"prefix": "-", "name": "zvcf"}, "value": "[result-filename.tar.gz]"},
-                                { "flag": {}, "value": "[path-of-directory-to-compress]"}
-                            ]
-                        }
-                    ]
-                }
+                    "description": "compress an entire directory",
+                    "value": "tar -zvcf [result-filename.tar.gz] [path-of-directory-to-compress]"
             }"#;
 
         let expected_result = r#"tar - compress an entire directory
+Platforms: all
 tar -zvcf [result-filename.tar.gz] [path-of-directory-to-compress]
 "#;
         assert_eq!(
