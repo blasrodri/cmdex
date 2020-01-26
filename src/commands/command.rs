@@ -2,21 +2,25 @@ use serde::{Deserialize, Serialize};
 use std::convert::From;
 
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
-pub struct CommandExample<'a> {
-    pub name: &'a str,
-    pub description: &'a str,
+pub struct CommandExample {
+    pub name: String,
+    pub description: String,
     pub value: String,
     pub platforms: Option<Vec<String>>,
 }
 
-impl<'a> From<&'a str> for CommandExample<'a> {
+impl<'a> From<&'a str> for CommandExample {
     fn from(s: &'a str) -> Self {
-        match serde_json::from_str::<CommandExample<'a>>(s) {
+        match serde_json::from_str::<CommandExample>(s) {
             Ok(command_example) => command_example,
             Err(err) => panic!(err),
         }
     }
 }
+
+// pub fn new_command_cli() -> CommandExample {
+
+// }
 
 #[macro_export]
 macro_rules! command_example {
@@ -32,8 +36,8 @@ mod test {
     #[test]
     fn test_command_example() {
         let expected_value = CommandExample {
-            name: "find",
-            description: "search for files in a directory hierarchy",
+            name: "find".to_string(),
+            description: "search for files in a directory hierarchy".to_string(),
             platforms: None,
             value: "find . --name *.rs".to_string(),
         };

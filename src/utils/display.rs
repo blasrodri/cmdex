@@ -7,7 +7,7 @@ arg_enum! {
     }
 }
 
-fn display_ascii<'a>(ce: &CommandExample<'a>) -> String {
+fn display_ascii(ce: &CommandExample) -> String {
     let CommandExample {
         name,
         description,
@@ -36,11 +36,11 @@ Platforms: {}
     )
 }
 
-fn display_json<'a>(ce: &CommandExample<'a>) -> String {
+fn display_json(ce: &CommandExample) -> String {
     serde_json::to_string_pretty(ce).unwrap()
 }
 
-pub fn display<'a>(ce: &CommandExample<'a>, display_format: &DisplayFormat) {
+pub fn display(ce: &CommandExample, display_format: &DisplayFormat) {
     match display_format {
         DisplayFormat::ASCII => println!("{}", display_ascii(ce)),
         DisplayFormat::JSON => println!("{}", display_json(ce)),

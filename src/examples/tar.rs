@@ -2,7 +2,7 @@ use crate::commands::command::*;
 use crate::utils::display::{display, DisplayFormat};
 
 lazy_static! {
-    pub static ref EXAMPLES: Vec<CommandExample<'static>> = { vec![] };
+    pub static ref EXAMPLES: Vec<CommandExample> = { vec![] };
 }
 
 pub fn examples(display_format: &DisplayFormat) {
