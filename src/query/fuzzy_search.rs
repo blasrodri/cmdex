@@ -12,7 +12,7 @@ pub fn fuzzy_search<'a>(query: &'a str, command_name: Option<&'a str>) -> Vec<St
         .iter()
         .map(|command_ex_str| {
             (
-                matcher.fuzzy_match(command_example!(command_ex_str).command.description, query),
+                matcher.fuzzy_match(command_example!(command_ex_str).description, query),
                 command_ex_str,
             )
         })

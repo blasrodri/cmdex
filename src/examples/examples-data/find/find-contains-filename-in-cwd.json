@@ -1,16 +1,6 @@
 {
-    "command": {
-        "name": "find",
-        "description": "Find all the files whose name is foo.txt in a current working directory"
-    },
-    "synopsis": {
-        "command_options": [
-            {
-                "flag_values": [
-                    { "flag": {}, "value": "."},
-                    { "flag": {"prefix": "-", "name": "name"}, "value": "foo.txt"}
-                ]
-            }
-        ]
-    }
+    "name": "find",
+    "description": "Find all the files whose name is foo.txt in a current working directory",
+    "value": "find . -name foo.txt",
+    "platforms": null
 }
