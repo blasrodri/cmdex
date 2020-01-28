@@ -15,7 +15,7 @@ fn load_file_paths(command_name: Option<&str>, extension: &str, base_dir: &str) 
     // It assumes that the max level of depth is 2.
     if command_name.is_none() {
         return fs::read_dir(&base_dir)
-            .expect(&format!("Could not open dir {}", &base_dir)[..])
+            .expect(format!("Could not open dir {}", &base_dir).as_str())
             .map(|res| res.unwrap().path())
             .collect::<Vec<_>>()
             .iter()
@@ -35,7 +35,7 @@ fn load_file_paths(command_name: Option<&str>, extension: &str, base_dir: &str) 
         base_dir.to_string()
     };
     fs::read_dir(&base_dir)
-        .expect(&format!("Could not open dir {}", &base_dir)[..])
+        .expect(format!("Could not open dir {}", &base_dir).as_str())
         .map(|res| res.unwrap().path())
         .collect::<Vec<_>>()
         .iter()

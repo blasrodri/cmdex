@@ -95,5 +95,5 @@ fn find_examples_fuzzy(
 ) {
     fuzzy_search(query, command_name, category)
         .iter()
-        .for_each(|s| display(&command_example!(&s[..]), &display_format))
+        .for_each(|s| display(&command_example!(s.as_str()), &display_format))
 }

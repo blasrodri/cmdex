@@ -23,7 +23,7 @@ fn display_ascii(ce: &CommandExample) -> String {
             .iter()
             .fold(String::from(""), |mut acc, s| {
                 acc.push_str(" ");
-                acc.push_str(&s[..]);
+                acc.push_str(s.as_str());
                 acc
             })
     };
