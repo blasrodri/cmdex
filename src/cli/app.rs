@@ -1,6 +1,6 @@
 use crate::commands::command::CommandExample;
 use crate::examples::*;
-use crate::query::fuzzy_search::fuzzy_search;
+use crate::query::fuzzy_search::{fuzzy_search, FuzzySearchCategory};
 use crate::utils::display::{display, DisplayFormat};
 
 use clap::{App, Arg};
@@ -16,6 +16,16 @@ pub fn run() {
                 .long("query")
                 .value_name("QUERY")
                 .help("Query a command (fuzzy match)")
+                .takes_value(true),
+        )
+        .arg(
+            Arg::with_name("query-category")
+                .short("c")
+                .long("category")
+                .value_name("QUERY CATEGORY")
+                .help("Query a command on a category (fuzzy match)")
+                .possible_values(&FuzzySearchCategory::variants())
+                .case_insensitive(true)
                 .takes_value(true),
         )
         .arg(
@@ -40,6 +50,14 @@ pub fn run() {
     // required we could have used an 'if let' to conditionally get the value)
     let command_name = matches.value_of("COMMAND_NAME");
     let query_fuzzy = matches.value_of("query");
+    let query_category = matches
+        .value_of("query-category")
+        .map(|s| match s {
+            "command" => FuzzySearchCategory::Command,
+            _ => FuzzySearchCategory::Description,
+        })
+        .unwrap_or(FuzzySearchCategory::Description);
+    dbg!(&query_category);
     let display_format = match matches.value_of("display_format").unwrap_or("ascii") {
         "ascii" => DisplayFormat::ASCII,
         "json" => DisplayFormat::JSON,
@@ -47,9 +65,14 @@ pub fn run() {
     };
     match (command_name, query_fuzzy) {
         (Some(cmd_opt), Some(fuzzy_query)) => {
-            find_examples_fuzzy(fuzzy_query, Some(cmd_opt), &display_format)
+            find_examples_fuzzy(fuzzy_query, Some(cmd_opt), &display_format, query_category)
         }
-        (None, Some(fuzzy_query)) => find_examples_fuzzy(fuzzy_query, None, &display_format),
+        (None, Some(fuzzy_query)) => find_examples_fuzzy(
+            fuzzy_query,
+            None,
+            &display_format,
+            FuzzySearchCategory::Description,
+        ),
         (Some(cmd), _) => find_examples(cmd, &display_format),
         _ => eprintln!("Unrecognized command. Run command_examples --help for more information."),
     }
@@ -64,8 +87,13 @@ fn find_examples(command_name: &str, display_format: &DisplayFormat) {
     }
 }
 
-fn find_examples_fuzzy(query: &str, command_name: Option<&str>, display_format: &DisplayFormat) {
-    fuzzy_search(query, command_name)
+fn find_examples_fuzzy(
+    query: &str,
+    command_name: Option<&str>,
+    display_format: &DisplayFormat,
+    category: FuzzySearchCategory,
+) {
+    fuzzy_search(query, command_name, category)
         .iter()
         .for_each(|s| display(&command_example!(&s[..]), &display_format))
 }

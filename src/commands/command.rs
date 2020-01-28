@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
 use std::convert::From;
 
+use crate::query::fuzzy_search::FuzzySearchCategory;
+
 #[derive(Debug, Deserialize, Serialize, PartialEq)]
 pub struct CommandExample {
     pub name: String,
@@ -17,6 +19,22 @@ impl<'a> From<&'a str> for CommandExample {
         }
     }
 }
+
+impl CommandExample {
+    pub fn get_by_category(&self, category: &FuzzySearchCategory) -> &str {
+        match category {
+            &FuzzySearchCategory::Command => self.value.as_str(),
+            &FuzzySearchCategory::Description => self.description.as_str(),
+        }
+    }
+}
+/*
+pub fn validate(new_cmd_str: &str) -> Result<CommandExample, String> {
+        let cmd_example = serde_json::from_str::<CommandExample>(new_cmd_str)
+            .map_err(|e| e.to_string())?;
+
+}
+            */
 
 // pub fn new_command_cli() -> CommandExample {
 
