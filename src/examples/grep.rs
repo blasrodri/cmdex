@@ -2,7 +2,7 @@ use crate::commands::command::*;
 use crate::utils::display::{display, DisplayFormat};
 
 lazy_static! {
-    pub static ref EXAMPLES: Vec<CommandExample<'static>> = {
+    pub static ref EXAMPLES: Vec<CommandExample> = {
         vec![command_example!(include_str!(
             "examples-data/grep/grep-recursively-in-cwd.json"
         ))]
