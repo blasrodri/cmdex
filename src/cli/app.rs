@@ -1,4 +1,5 @@
 use crate::commands::command::CommandExample;
+use crate::commands::new_command::publish_new_command;
 use crate::examples::*;
 use crate::query::fuzzy_search::{fuzzy_search, FuzzySearchCategory};
 use crate::utils::display::{display, DisplayFormat};
@@ -16,6 +17,15 @@ pub fn run() {
                 .long("query")
                 .value_name("QUERY")
                 .help("Query a command (fuzzy match)")
+                .takes_value(true),
+        )
+        .arg(
+            Arg::with_name("publish-example")
+                .short("p")
+                .long("publish-example")
+                .value_name("PUBLISH EXAMPLE")
+                .help("Add a .json file with the example you want to publish")
+                .case_insensitive(true)
                 .takes_value(true),
         )
         .arg(
@@ -57,12 +67,24 @@ pub fn run() {
             _ => FuzzySearchCategory::Description,
         })
         .unwrap_or(FuzzySearchCategory::Description);
-    dbg!(&query_category);
     let display_format = match matches.value_of("display_format").unwrap_or("ascii") {
         "ascii" => DisplayFormat::ASCII,
         "json" => DisplayFormat::JSON,
         _ => DisplayFormat::ASCII,
     };
+    if let Some(new_example_path_str) = matches.value_of("publish-example") {
+        match publish_new_command(new_example_path_str) {
+            Ok(_pr_url) => {
+                //println!("Congratulations! You just posted a new command example. Check it on {}", pr_url);
+                println!("Congratulations! Your command is ready to be published. Submit a PR on our github repo: https://github.com/blasrodri/command_example.git");
+                return;
+            }
+            Err(e) => {
+                println!("{}", e);
+                return;
+            }
+        }
+    }
     match (command_name, query_fuzzy) {
         (Some(cmd_opt), Some(fuzzy_query)) => {
             find_examples_fuzzy(fuzzy_query, Some(cmd_opt), &display_format, query_category)
