@@ -1,0 +1,9 @@
+{
+  "name": "grep",
+  "description": "Grep recursively in all directories and subdirectories",
+  "platform": [
+    "Linux",
+    "Solaris"
+  ],
+  "value": "grep -r foo"
+}
