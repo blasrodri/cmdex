@@ -23,8 +23,8 @@ impl<'a> From<&'a str> for CommandExample {
 impl CommandExample {
     pub fn get_by_category(&self, category: &FuzzySearchCategory) -> &str {
         match category {
-            &FuzzySearchCategory::Command => self.value.as_str(),
-            &FuzzySearchCategory::Description => self.description.as_str(),
+            FuzzySearchCategory::Command => self.value.as_str(),
+            FuzzySearchCategory::Description => self.description.as_str(),
         }
     }
 }
