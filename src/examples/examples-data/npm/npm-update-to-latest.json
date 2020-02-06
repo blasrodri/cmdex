@@ -1,0 +1,6 @@
+{
+    "name": "npm",
+    "description": "Update npm to latest version",
+    "platforms": ["Linux", "Mac OS"],
+    "value": "npm install npm@latest -g"
+}

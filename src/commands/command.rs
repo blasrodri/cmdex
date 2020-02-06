@@ -53,13 +53,15 @@ mod test {
             description: "search for files in a directory hierarchy".to_string(),
             platforms: None,
             value: "find . --name *.rs".to_string(),
+            authors: default_authors(),
         };
 
         let command_example: CommandExample = serde_json::from_str(
             r#"{
                     "name": "find",
                     "description": "search for files in a directory hierarchy",
-                    "value": "find . --name *.rs"
+                    "value": "find . --name *.rs",
+                    "authors": "Blas Rodriguez Irizar <rodrigblas@gmail.com>"
                 }"#,
         )
         .unwrap();

@@ -18,15 +18,18 @@ fn display_ascii(ce: &CommandExample) -> String {
     let platforms_str = if platforms.is_none() {
         "all".to_string()
     } else {
-        platforms
+        let mut p = platforms
             .clone()
             .unwrap()
             .iter()
             .fold(String::from(""), |mut acc, s| {
-                acc.push_str(" ");
                 acc.push_str(s.as_str());
+                acc.push_str(", ");
                 acc
-            })
+            });
+        // Remove trailing comma and space
+        p.truncate(p.len() - 2);
+        p
     };
     format!(
         r#"{} - {}
@@ -58,12 +61,14 @@ mod test {
         let command_example = r#"{
                     "name": "tar",
                     "description": "compress an entire directory",
-                    "value": "tar -zvcf [result-filename.tar.gz] [path-of-directory-to-compress]"
+                    "value": "tar -zvcf [result-filename.tar.gz] [path-of-directory-to-compress]",
+                    "authors": "Blas Rodriguez Irizar <rodrigblas@gmail.com>"
             }"#;
 
         let expected_result = r#"tar - compress an entire directory
 Platforms: all
 tar -zvcf [result-filename.tar.gz] [path-of-directory-to-compress]
+Authors: Blas Rodriguez Irizar <rodrigblas@gmail.com>
 "#;
         assert_eq!(
             display_ascii(&serde_json::from_str(command_example).unwrap()),
