@@ -5,8 +5,42 @@ use crate::query::fuzzy_search::{fuzzy_search, FuzzySearchCategory};
 use crate::utils::display::{display, DisplayFormat};
 
 use clap::{App, Arg};
+use regex;
+use regex::Regex;
 
-pub fn get_command_example_from_string(_user_input: &str) {}
+pub fn get_command_example_from_string(user_input: &str) -> Vec<String> {
+    let re = Regex::new(r"^\d{4}-\d{2}-\d{2}$").unwrap();
+    let user_input_vec = user_input.split_whitespace();
+    dbg!(&user_input_vec);
+    let matches = create_app().get_matches_from(user_input_vec);
+    let command_name = matches.value_of("COMMAND_NAME");
+    let query_fuzzy = matches.value_of("query");
+    let query_category = matches
+        .value_of("query-category")
+        .map(|s| match s {
+            "command" => FuzzySearchCategory::Command,
+            _ => FuzzySearchCategory::Description,
+        })
+        .unwrap_or(FuzzySearchCategory::Description);
+    let display_format = match matches.value_of("display_format").unwrap_or("ascii") {
+        "ascii" => DisplayFormat::ASCII,
+        "json" => DisplayFormat::JSON,
+        _ => DisplayFormat::ASCII,
+    };
+
+    match (command_name, query_fuzzy) {
+        (Some(cmd_opt), Some(fuzzy_query)) => find_examples_fuzzy(fuzzy_query, Some(cmd_opt), &display_format, query_category),
+        (None, Some(fuzzy_query)) => find_examples_fuzzy(
+            fuzzy_query,
+            None,
+            &display_format,
+            FuzzySearchCategory::Description,
+        ),
+        (Some(cmd), _) => find_examples(cmd, &display_format),
+        _ => vec![format!("Unrecognized command. Run command_examples --help for more information.")],
+    }
+
+}
 
 fn create_app() -> App<'static, 'static> {
     App::new("Command Example")
@@ -131,3 +165,25 @@ fn find_examples_fuzzy(
         .map(|s| display(&command_example!(s.as_str()), &display_format))
         .collect::<Vec<String>>()
 }
+
+
+#[cfg(test)]
+
+mod test{
+    use super::*;
+
+    #[test]
+    fn test_get_command_example_from_string() {
+        assert_eq!(
+            get_command_example_from_string("trash"),
+            vec![format!("Unrecognized command. Run command_examples --help for more information.")],
+            );
+
+        assert!(get_command_example_from_string("command_examples find").len() > 1);
+        assert!(get_command_example_from_string(r#"command_examples find -q="exist""#).len() == 0);
+
+
+    }
+
+}
+
