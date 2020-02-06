@@ -40,10 +40,10 @@ fn display_json(ce: &CommandExample) -> String {
     serde_json::to_string_pretty(ce).unwrap()
 }
 
-pub fn display(ce: &CommandExample, display_format: &DisplayFormat) {
+pub fn display(ce: &CommandExample, display_format: &DisplayFormat) -> String {
     match display_format {
-        DisplayFormat::ASCII => println!("{}", display_ascii(ce)),
-        DisplayFormat::JSON => println!("{}", display_json(ce)),
+        DisplayFormat::ASCII => display_ascii(ce),
+        DisplayFormat::JSON => display_json(ce),
     }
 }
 

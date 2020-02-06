@@ -6,8 +6,10 @@ use crate::utils::display::{display, DisplayFormat};
 
 use clap::{App, Arg};
 
-pub fn run() {
-    let matches = App::new("Command Example")
+pub fn get_command_example_from_string(_user_input: &str) {}
+
+fn create_app() -> App<'static, 'static> {
+    App::new("Command Example")
         .version("0.1.0")
         .author("Blas Rodriguez Irizar. <rodrigblas@gmail.com>")
         .about("Search for command examples directly on your command line")
@@ -54,7 +56,10 @@ pub fn run() {
                 .required(false)
                 .index(1),
         )
-        .get_matches();
+}
+
+pub fn run() {
+    let matches = create_app().get_matches();
 
     // Calling .unwrap() is safe here because "INPUT" is required (if "INPUT" wasn't
     // required we could have used an 'if let' to conditionally get the value)
@@ -88,24 +93,30 @@ pub fn run() {
     match (command_name, query_fuzzy) {
         (Some(cmd_opt), Some(fuzzy_query)) => {
             find_examples_fuzzy(fuzzy_query, Some(cmd_opt), &display_format, query_category)
+                .iter()
+                .for_each(|cmd_ex| println!("{}", cmd_ex));
         }
         (None, Some(fuzzy_query)) => find_examples_fuzzy(
             fuzzy_query,
             None,
             &display_format,
             FuzzySearchCategory::Description,
-        ),
-        (Some(cmd), _) => find_examples(cmd, &display_format),
+        )
+        .iter()
+        .for_each(|cmd_ex| println!("{}", cmd_ex)),
+        (Some(cmd), _) => find_examples(cmd, &display_format)
+            .iter()
+            .for_each(|cmd_ex| println!("{}", cmd_ex)),
         _ => eprintln!("Unrecognized command. Run command_examples --help for more information."),
     }
 }
 
-fn find_examples(command_name: &str, display_format: &DisplayFormat) {
+fn find_examples(command_name: &str, display_format: &DisplayFormat) -> Vec<String> {
     match command_name {
         "find" => find::examples(&display_format),
         "grep" => grep::examples(&display_format),
         "tar" => tar::examples(&display_format),
-        _ => println!("{}", format!("No command examples for {}.", command_name)),
+        _ => vec![format!("No command examples for {}.", command_name)],
     }
 }
 
@@ -114,8 +125,9 @@ fn find_examples_fuzzy(
     command_name: Option<&str>,
     display_format: &DisplayFormat,
     category: FuzzySearchCategory,
-) {
+) -> Vec<String> {
     fuzzy_search(query, command_name, category)
         .iter()
-        .for_each(|s| display(&command_example!(s.as_str()), &display_format))
+        .map(|s| display(&command_example!(s.as_str()), &display_format))
+        .collect::<Vec<String>>()
 }

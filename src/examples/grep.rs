@@ -9,8 +9,9 @@ lazy_static! {
     };
 }
 
-pub fn examples(display_format: &DisplayFormat) {
+pub fn examples(display_format: &DisplayFormat) -> Vec<String> {
     EXAMPLES
         .iter()
-        .for_each(|cmd_ex| display(cmd_ex, &display_format))
+        .map(|cmd_ex| display(cmd_ex, &display_format))
+        .collect::<Vec<String>>()
 }
