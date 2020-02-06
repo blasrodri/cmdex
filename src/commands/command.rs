@@ -28,17 +28,6 @@ impl CommandExample {
         }
     }
 }
-/*
-pub fn validate(new_cmd_str: &str) -> Result<CommandExample, String> {
-        let cmd_example = serde_json::from_str::<CommandExample>(new_cmd_str)
-            .map_err(|e| e.to_string())?;
-
-}
-            */
-
-// pub fn new_command_cli() -> CommandExample {
-
-// }
 
 #[macro_export]
 macro_rules! command_example {
