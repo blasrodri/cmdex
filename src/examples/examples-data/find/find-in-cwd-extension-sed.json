@@ -1,6 +1,6 @@
 {
     "name": "find",
-    "description": "Find files in current working dir with *.txt extension and execute ",
+    "description": "Find files in current working dir with *.txt extension and replace string inplace with sed",
     "value": "find $(pwd) -name \"*.txt\" -exec sed -i 's/foo/bar/g {} \\;'",
     "platforms": null
 }

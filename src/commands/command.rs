@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+use serde::{self, Deserialize, Serialize};
 use std::convert::From;
 
 use crate::query::fuzzy_search::FuzzySearchCategory;
@@ -9,6 +9,12 @@ pub struct CommandExample {
     pub description: String,
     pub value: String,
     pub platforms: Option<Vec<String>>,
+    #[serde(default = "default_authors")]
+    pub authors: String,
+}
+
+fn default_authors() -> String {
+    "Blas Rodriguez Irizar <rodrigblas@gmail.com>".to_string()
 }
 
 impl<'a> From<&'a str> for CommandExample {

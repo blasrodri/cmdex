@@ -13,6 +13,7 @@ fn display_ascii(ce: &CommandExample) -> String {
         description,
         value,
         platforms,
+        authors,
     } = ce;
     let platforms_str = if platforms.is_none() {
         "all".to_string()
@@ -31,8 +32,9 @@ fn display_ascii(ce: &CommandExample) -> String {
         r#"{} - {}
 Platforms: {}
 {}
+Authors: {}
 "#,
-        name, description, platforms_str, value
+        name, description, platforms_str, value, authors
     )
 }
 
