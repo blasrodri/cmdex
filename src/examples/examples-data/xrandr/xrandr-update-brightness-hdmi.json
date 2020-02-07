@@ -1,0 +1,7 @@
+{
+    "name": "xrandr",
+    "description": "Change the brightness of the HDMI1 output",
+    "value": "xrandr --output HDMI-1 --brightness 0.7",
+    "platforms": ["Linux"],
+    "authors": "Blas Rodriguez Irizar <rodrigblas@gmail.com>"
+}

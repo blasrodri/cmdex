@@ -108,6 +108,7 @@ fn find_examples(command_name: &str, display_format: &DisplayFormat) {
         "sed" => sed::examples(&display_format),
         "shutdown" => shutdown::examples(&display_format),
         "tar" => tar::examples(&display_format),
+        "xrandr" => xrandr::examples(&display_format),
         _ => println!("{}", format!("No command examples for {}.", command_name)),
     }
 }
