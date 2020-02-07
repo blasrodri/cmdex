@@ -1,4 +1,4 @@
-use command_examples::cli;
+use cmdex::cli;
 
 fn main() {
     cli::app::run()
