@@ -8,7 +8,7 @@ use clap::{App, Arg};
 
 pub fn run() {
     let matches = App::new("Command Example")
-        .version("0.1.6")
+        .version("0.1.7")
         .author("Blas Rodriguez Irizar. <rodrigblas@gmail.com>")
         .about("Search for command examples directly on your command line")
         .arg(
