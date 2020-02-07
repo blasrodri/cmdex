@@ -1,5 +1,6 @@
 #[macro_use]
 pub mod find;
+pub mod git;
 pub mod grep;
 pub mod npm;
 pub mod sed;

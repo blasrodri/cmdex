@@ -103,6 +103,7 @@ pub fn run() {
 fn find_examples(command_name: &str, display_format: &DisplayFormat) {
     match command_name {
         "find" => find::examples(&display_format),
+        "git" => git::examples(&display_format),
         "grep" => grep::examples(&display_format),
         "npm" => npm::examples(&display_format),
         "sed" => sed::examples(&display_format),

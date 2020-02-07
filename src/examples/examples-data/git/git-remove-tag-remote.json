@@ -1,0 +1,7 @@
+{
+    "name": "git",
+    "description": "Delete tag from remote (origin)", 
+    "value": "git push --delete origin <tag_name>",
+    "platforms": ["all"],
+    "authors": "Blas Rodriguez Irizar <rodrigblas@gmail.com>"
+}
