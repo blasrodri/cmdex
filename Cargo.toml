@@ -10,6 +10,9 @@ repository = "https://github.com/blasrodri/cmdex"
 homepage = "https://github.com/blasrodri/cmdex"
 documentation = "https://docs.rs/tokio/0.1.0/cmdex/"
 
+
+exclude = ["new_command/*.sh"]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
