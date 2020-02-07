@@ -1,0 +1,6 @@
+{
+    "name": "shutdown",
+    "description": "Shutdown your computer right now",
+    "platform": ["Linux"],
+    "value": "sudo shutdown now"
+}

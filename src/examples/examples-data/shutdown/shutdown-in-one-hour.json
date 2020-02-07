@@ -1,0 +1,6 @@
+{
+    "name": "shutdown",
+    "description": "Shutdown your computer in one hour (60 minutes)",
+    "platform": ["Linux"],
+    "value": "sudo shutdown -P +60"
+}
