@@ -49,7 +49,7 @@ mod test {
     fn test_fuzzy_search_wo_command_name() {
         let expected =
             vec![
-                include_str!("../examples/examples-data/find/find-contains-filename-in-cwd.json")
+                include_str!("../../examples-data/find/find-contains-filename-in-cwd.json")
                     .to_string(),
             ];
         let query = "name is foo.";
@@ -63,7 +63,7 @@ mod test {
     fn test_fuzzy_search_w_command_name() {
         let expected =
             vec![
-                include_str!("../examples/examples-data/find/find-contains-filename-in-cwd.json")
+                include_str!("../../examples-data/find/find-contains-filename-in-cwd.json")
                     .to_string(),
             ];
         let query = "find all the files name is foo.";

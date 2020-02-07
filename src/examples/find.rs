@@ -5,10 +5,10 @@ lazy_static! {
     pub static ref EXAMPLES: Vec<CommandExample> = {
         vec![
             command_example!(include_str!(
-                "examples-data/find/find-in-cwd-extension-sed.json"
+                "../../examples-data/find/find-in-cwd-extension-sed.json"
             )),
             command_example!(include_str!(
-                "examples-data/find/find-contains-filename-in-cwd.json"
+                "../../examples-data/find/find-contains-filename-in-cwd.json"
             )),
         ]
     };

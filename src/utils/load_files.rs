@@ -2,7 +2,7 @@ use std::fs;
 use std::io::Read;
 
 fn get_base_dir() -> &'static str {
-    const BASE_DIR: &str = "./src/examples/examples-data/";
+    const BASE_DIR: &str = "./examples-data";
     BASE_DIR
 }
 

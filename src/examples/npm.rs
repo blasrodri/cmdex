@@ -4,12 +4,14 @@ use crate::utils::display::{display, DisplayFormat};
 lazy_static! {
     pub static ref EXAMPLES: Vec<CommandExample> = {
         vec![
-            command_example!(include_str!("examples-data/npm/npm-update-to-latest.json")),
             command_example!(include_str!(
-                "examples-data/npm/npm-installing-package-global-mode.json"
+                "../../examples-data/npm/npm-update-to-latest.json"
             )),
             command_example!(include_str!(
-                "examples-data/npm/npm-listing-global-packages.json"
+                "../../examples-data/npm/npm-installing-package-global-mode.json"
+            )),
+            command_example!(include_str!(
+                "../../examples-data/npm/npm-listing-global-packages.json"
             )),
         ]
     };

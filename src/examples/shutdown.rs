@@ -4,9 +4,11 @@ use crate::utils::display::{display, DisplayFormat};
 lazy_static! {
     pub static ref EXAMPLES: Vec<CommandExample> = {
         vec![
-            command_example!(include_str!("examples-data/shutdown/shutdown-now.json")),
             command_example!(include_str!(
-                "examples-data/shutdown/shutdown-in-one-hour.json"
+                "../../examples-data/shutdown/shutdown-now.json"
+            )),
+            command_example!(include_str!(
+                "../../examples-data/shutdown/shutdown-in-one-hour.json"
             )),
         ]
     };
