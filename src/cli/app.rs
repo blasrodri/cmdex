@@ -106,7 +106,7 @@ fn find_examples(command_name: &str, display_format: &DisplayFormat) {
         "grep" => grep::examples(&display_format),
         "npm" => npm::examples(&display_format),
         "sed" => sed::examples(&display_format),
-        "shutdown" => sed::examples(&display_format),
+        "shutdown" => shutdown::examples(&display_format),
         "tar" => tar::examples(&display_format),
         _ => println!("{}", format!("No command examples for {}.", command_name)),
     }
