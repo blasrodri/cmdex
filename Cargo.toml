@@ -6,6 +6,7 @@ edition = "2018"
 description = """
 Search for those commands you don't remember!
 """
+license = "MIT"
 repository = "https://github.com/blasrodri/cmdex"
 homepage = "https://github.com/blasrodri/cmdex"
 documentation = "https://docs.rs/tokio/0.1.0/cmdex/"
