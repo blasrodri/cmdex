@@ -1,0 +1,6 @@
+{
+    "name": "npm",
+    "description": "Listing global packages installed.",
+    "platforms": ["all"],
+    "value": "npm list --global"
+}

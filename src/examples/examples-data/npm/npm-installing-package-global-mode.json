@@ -1,0 +1,6 @@
+{
+    "name": "npm",
+    "description": "Installing a package in global mode. In this case, it's uglify-js",
+    "platforms": ["all"],
+    "value": "npm install uglify-js --global"
+}

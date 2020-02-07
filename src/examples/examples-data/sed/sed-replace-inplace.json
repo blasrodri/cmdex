@@ -1,0 +1,6 @@
+{
+    "name": "sed",
+    "description": "edit file in place",
+    "platforms": ["Linux", "BSD", "Mac"],
+    "value": "sed -i 's/STRING_TO_REPLACE/STRING_TO_REPLACE_IT/g' filename"
+}
