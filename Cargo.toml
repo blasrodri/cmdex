@@ -1,8 +1,14 @@
 [package]
-name = "command_examples"
+name = "cmdex"
 version = "0.1.0"
 authors = ["Blas Rodriguez Irizar <rodrigblas@gmail.com>"]
 edition = "2018"
+description = """
+Search for those commands you don't remember!
+"""
+repository = "https://github.com/blasrodri/cmdex"
+homepage = "https://github.com/blasrodri/cmdex"
+documentation = "https://docs.rs/tokio/0.1.0/cmdex/"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
