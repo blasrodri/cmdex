@@ -2,7 +2,8 @@ use std::fs;
 use std::io::Read;
 
 fn get_base_dir() -> &'static str {
-    const BASE_DIR: &str = "./examples-data";
+    const BASE_DIR: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/examples-data");
+    //const BASE_DIR: &str = "./examples-data";
     BASE_DIR
 }
 

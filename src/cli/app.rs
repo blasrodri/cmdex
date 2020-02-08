@@ -120,7 +120,12 @@ fn find_examples_fuzzy(
     display_format: &DisplayFormat,
     category: FuzzySearchCategory,
 ) {
-    fuzzy_search(query, command_name, category)
-        .iter()
-        .for_each(|s| display(&command_example!(s.as_str()), &display_format))
+    let results = fuzzy_search(query, command_name, category);
+    if results.clone().iter().count() == 0 {
+        println!("{}", format!("No command examples for query {}.", query));
+    } else {
+        results
+            .iter()
+            .for_each(|s| display(&command_example!(s.as_str()), &display_format))
+    }
 }
