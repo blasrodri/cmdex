@@ -3,9 +3,14 @@ use crate::utils::display::{display, DisplayFormat};
 
 lazy_static! {
     pub static ref EXAMPLES: Vec<CommandExample> = {
-        vec![command_example!(include_str!(
-            "../../examples-data/git/git-remove-tag-remote.json"
-        ))]
+        vec![
+            command_example!(include_str!(
+                "../../examples-data/git/git-remove-tag-remote.json"
+            )),
+            command_example!(include_str!(
+                "../../examples-data/git/git-add-user-email.json"
+            )),
+        ]
     };
 }
 

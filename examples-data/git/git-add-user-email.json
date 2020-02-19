@@ -1,0 +1,7 @@
+{
+    "name": "git",
+    "description": "Set user's email globally",
+    "value": "git config --global user.email <user@email> ",
+    "platforms": ["all"],
+    "authors": "Blas Rodriguez Irizar <rodrigblas@gmail.com>"
+}
