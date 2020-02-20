@@ -1,4 +1,5 @@
 #[macro_use]
+pub mod emacs;
 pub mod find;
 pub mod git;
 pub mod grep;

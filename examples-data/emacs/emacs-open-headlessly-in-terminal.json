@@ -1,0 +1,7 @@
+{
+    "name": "emacs",
+    "description": "Open Emacs hedlessly in the terminal and in the background",
+    "value": "emacs -nw &",
+    "platforms": ["all"],
+    "authors": "Blas Rodriguez Irizar <rodrigblas@gmail.com>"
+}
