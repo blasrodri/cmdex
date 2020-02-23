@@ -1,6 +1,6 @@
 [package]
 name = "cmdex"
-version = "0.1.11"
+version = "0.1.12"
 authors = ["Blas Rodriguez Irizar <rodrigblas@gmail.com>"]
 edition = "2018"
 description = """
@@ -9,7 +9,7 @@ Search for those commands you don't remember!
 license = "MIT"
 repository = "https://github.com/blasrodri/cmdex"
 homepage = "https://github.com/blasrodri/cmdex"
-documentation = "https://docs.rs/cmdex/0.1.11/cmdex/"
+documentation = "https://docs.rs/cmdex/0.1.12/cmdex/"
 
 
 exclude = ["new_command/*.sh"]
