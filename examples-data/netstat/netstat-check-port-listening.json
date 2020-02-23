@@ -1,0 +1,7 @@
+ {
+    "name": "netstat",
+    "description": "Check using netstat if an application is listening on a port",
+    "value": "netstat -plnt | grep :<PORT_NUMBER>",
+    "platforms": ["Linux"],
+    "authors": "Blas Rodriguez Irizar <rodrigblas@gmail.com>"
+}

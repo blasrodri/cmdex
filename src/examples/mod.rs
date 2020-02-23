@@ -3,6 +3,7 @@ pub mod emacs;
 pub mod find;
 pub mod git;
 pub mod grep;
+pub mod netstat;
 pub mod npm;
 pub mod sed;
 pub mod shutdown;
