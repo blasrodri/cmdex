@@ -5,13 +5,14 @@ use crate::examples::*;
 use crate::query::fuzzy_search::{fuzzy_search, FuzzySearchCategory};
 use crate::utils::display::{display, DisplayFormat};
 
-use clap::{App, Arg};
+use clap::{App, AppSettings, Arg};
 
 pub fn run() {
     let db = CommandsDB::new();
 
     let matches = App::new("Command Example")
         .version("0.2.2")
+        .setting(AppSettings::AllowMissingPositional)
         .author("Blas Rodriguez Irizar. <rodrigblas@gmail.com>")
         .about("Search for command examples directly on your command line")
         .arg(
@@ -51,12 +52,7 @@ pub fn run() {
                 .help("Select a display format: ")
                 .takes_value(true),
         )
-        .arg(
-            Arg::with_name("COMMAND_NAME")
-                .help("Sets the command name to find an example")
-                .required(false)
-                .index(1),
-        )
+        .arg(Arg::with_name("COMMAND_NAME").help("Sets the command name to find an example"))
         .get_matches();
 
     // Calling .unwrap() is safe here because "INPUT" is required (if "INPUT" wasn't
