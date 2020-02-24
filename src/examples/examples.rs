@@ -1,12 +1,10 @@
 use crate::commands::command::*;
 use crate::utils::display::{display, DisplayFormat};
 
-lazy_static! {
-    pub static ref EXAMPLES: Vec<CommandExample> = { vec![] };
-}
+type Examples = Vec<CommandExample>;
 
-pub fn examples(display_format: &DisplayFormat) {
-    EXAMPLES
+pub fn examples(examples: &Examples, display_format: &DisplayFormat) {
+    examples
         .iter()
         .for_each(|cmd_ex| display(cmd_ex, &display_format))
 }

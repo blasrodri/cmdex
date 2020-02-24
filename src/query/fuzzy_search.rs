@@ -1,5 +1,5 @@
 use crate::commands::command::*;
-use crate::utils::load_files::{load_command_examples_content, load_json_file_paths};
+use crate::commands::database::CommandsDB;
 
 use fuzzy_matcher::skim::SkimMatcherV2;
 use fuzzy_matcher::FuzzyMatcher;
@@ -13,12 +13,28 @@ arg_enum! {
 }
 
 pub fn fuzzy_search<'a>(
+    db: &CommandsDB,
     query: &'a str,
     command_name: Option<&'a str>,
     category: FuzzySearchCategory,
 ) -> Vec<String> {
-    let list_json_paths = load_json_file_paths(command_name);
-    let list_command_examples_content = load_command_examples_content(&list_json_paths);
+    let list_command_examples_content = match command_name {
+        None => db
+            .get_data()
+            .values()
+            .flatten()
+            .collect::<Vec<&CommandExample>>()
+            .iter()
+            .map(|x| x.to_string())
+            .collect::<Vec<String>>(),
+        Some(cmd) => db
+            .get_data()
+            .get(cmd)
+            .unwrap()
+            .iter()
+            .map(|x| x.to_string())
+            .collect::<Vec<String>>(),
+    };
     let matcher = SkimMatcherV2::default();
     let mut list_command_examples_with_match_points = list_command_examples_content
         .iter()
@@ -45,34 +61,49 @@ pub fn fuzzy_search<'a>(
 mod test {
     use super::*;
 
+    use crate::commands::database::CommandsDB;
+
     #[test]
     fn test_fuzzy_search_wo_command_name() {
-        let expected =
-            vec![
-                include_str!("../../examples-data/find/find-contains-filename-in-cwd.json")
-                    .to_string(),
-            ];
+        let expected = vec![command_example!(include_str!(
+            "../../examples-data/find/find-contains-filename-in-cwd.json"
+        ))
+        .to_string()];
         let query = "name is foo.";
         assert_eq!(
-            fuzzy_search(query, None, FuzzySearchCategory::Description),
+            fuzzy_search(
+                &CommandsDB::new(),
+                query,
+                None,
+                FuzzySearchCategory::Description
+            ),
             expected
         );
     }
 
     #[test]
     fn test_fuzzy_search_w_command_name() {
-        let expected =
-            vec![
-                include_str!("../../examples-data/find/find-contains-filename-in-cwd.json")
-                    .to_string(),
-            ];
+        let expected = vec![command_example!(include_str!(
+            "../../examples-data/find/find-contains-filename-in-cwd.json"
+        ))
+        .to_string()];
         let query = "find all the files name is foo.";
         assert_eq!(
-            fuzzy_search(query, Some("find"), FuzzySearchCategory::Description),
+            fuzzy_search(
+                &CommandsDB::new(),
+                query,
+                Some("find"),
+                FuzzySearchCategory::Description
+            ),
             expected
         );
         assert_eq!(
-            fuzzy_search(query, Some("grep"), FuzzySearchCategory::Description),
+            fuzzy_search(
+                &CommandsDB::new(),
+                query,
+                Some("grep"),
+                FuzzySearchCategory::Description
+            ),
             Vec::<String>::new()
         )
     }
