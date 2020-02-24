@@ -1,0 +1,7 @@
+{
+    "name": "awk",
+    "description": "Remove duplicate lines with awk while keeping empty lines",
+    "value": "awk '!/./ || !seen[$0]++' file",
+    "platforms": ["Linux"],
+    "authors": "Blas Rodriguez Irizar <rodrigblas@gmail.com>"
+}
