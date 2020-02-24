@@ -1,10 +1,9 @@
 #[macro_use]
 extern crate clap;
+extern crate fuzzy_matcher;
+extern crate lazy_static;
 extern crate serde;
 extern crate serde_json;
-#[macro_use]
-extern crate lazy_static;
-extern crate fuzzy_matcher;
 
 #[macro_use]
 pub mod commands;

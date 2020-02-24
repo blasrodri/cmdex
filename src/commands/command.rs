@@ -33,6 +33,13 @@ impl CommandExample {
             FuzzySearchCategory::Description => self.description.as_str(),
         }
     }
+
+    pub fn to_string(&self) -> String {
+        match serde_json::to_string_pretty::<CommandExample>(&self) {
+            Ok(command_example) => command_example,
+            Err(err) => panic!(err),
+        }
+    }
 }
 
 #[macro_export]

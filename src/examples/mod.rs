@@ -1,14 +1,4 @@
-#[macro_use]
-pub mod emacs;
-pub mod find;
-pub mod git;
-pub mod grep;
-pub mod netstat;
-pub mod npm;
-pub mod sed;
-pub mod shutdown;
-pub mod tar;
-pub mod xrandr;
+pub mod examples;
 
 #[macro_use]
 mod test_examples;

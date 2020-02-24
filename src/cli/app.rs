@@ -1,4 +1,5 @@
 use crate::commands::command::CommandExample;
+use crate::commands::database::CommandsDB;
 use crate::commands::new_command::publish_new_command;
 use crate::examples::*;
 use crate::query::fuzzy_search::{fuzzy_search, FuzzySearchCategory};
@@ -7,6 +8,8 @@ use crate::utils::display::{display, DisplayFormat};
 use clap::{App, Arg};
 
 pub fn run() {
+    let db = CommandsDB::new();
+
     let matches = App::new("Command Example")
         .version("0.1.12")
         .author("Blas Rodriguez Irizar. <rodrigblas@gmail.com>")
@@ -86,43 +89,40 @@ pub fn run() {
         }
     }
     match (command_name, query_fuzzy) {
-        (Some(cmd_opt), Some(fuzzy_query)) => {
-            find_examples_fuzzy(fuzzy_query, Some(cmd_opt), &display_format, query_category)
-        }
+        (Some(cmd_opt), Some(fuzzy_query)) => find_examples_fuzzy(
+            &db,
+            fuzzy_query,
+            Some(cmd_opt),
+            &display_format,
+            query_category,
+        ),
         (None, Some(fuzzy_query)) => find_examples_fuzzy(
+            &db,
             fuzzy_query,
             None,
             &display_format,
             FuzzySearchCategory::Description,
         ),
-        (Some(cmd), _) => find_examples(cmd, &display_format),
+        (Some(cmd), _) => find_examples(&db, cmd, &display_format),
         _ => eprintln!("Unrecognized command. Run command_examples --help for more information."),
     }
 }
 
-fn find_examples(command_name: &str, display_format: &DisplayFormat) {
-    match command_name {
-        "emacs" => emacs::examples(&display_format),
-        "find" => find::examples(&display_format),
-        "git" => git::examples(&display_format),
-        "grep" => grep::examples(&display_format),
-        "netstat" => netstat::examples(&display_format),
-        "npm" => npm::examples(&display_format),
-        "sed" => sed::examples(&display_format),
-        "shutdown" => shutdown::examples(&display_format),
-        "tar" => tar::examples(&display_format),
-        "xrandr" => xrandr::examples(&display_format),
-        _ => println!("{}", format!("No command examples for {}.", command_name)),
+fn find_examples(db: &CommandsDB, command_name: &str, display_format: &DisplayFormat) {
+    match db.get_data().get(command_name) {
+        Some(values) => examples::examples(values, &display_format),
+        None => println!("{}", format!("No command examples for {}.", command_name)),
     }
 }
 
 fn find_examples_fuzzy(
+    db: &CommandsDB,
     query: &str,
     command_name: Option<&str>,
     display_format: &DisplayFormat,
     category: FuzzySearchCategory,
 ) {
-    let results = fuzzy_search(query, command_name, category);
+    let results = fuzzy_search(db, query, command_name, category);
     if results.clone().iter().count() == 0 {
         println!("{}", format!("No command examples for query {}.", query));
     } else {

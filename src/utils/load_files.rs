@@ -1,7 +1,7 @@
 use std::fs;
 use std::io::Read;
 
-fn get_base_dir() -> &'static str {
+pub fn get_base_dir() -> &'static str {
     const BASE_DIR: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/examples-data");
     BASE_DIR
 }
@@ -48,6 +48,7 @@ fn load_file_paths(command_name: Option<&str>, extension: &str, base_dir: &str) 
         .map(|p| p.to_str().unwrap().to_string())
         .collect::<Vec<_>>()
 }
+
 pub fn load_command_examples_content(list_json_paths: &[String]) -> Vec<String> {
     list_json_paths
         .iter()
@@ -58,6 +59,19 @@ pub fn load_command_examples_content(list_json_paths: &[String]) -> Vec<String> 
             buf_reader.read_to_string(&mut contents).unwrap();
             contents
         })
+        .collect::<Vec<_>>()
+}
+
+pub fn get_command_names() -> Vec<String> {
+    let base_dir = get_base_dir();
+    fs::read_dir(&base_dir)
+        .unwrap_or_else(|_| panic!("Could not open dir {}", &base_dir))
+        .map(|res| res.unwrap().path())
+        .collect::<Vec<_>>()
+        .iter()
+        .filter(|p| p.as_path().is_dir())
+        // convert path buff to string
+        .map(|p| p.file_name().unwrap().to_str().unwrap().to_string())
         .collect::<Vec<_>>()
 }
 
@@ -97,5 +111,13 @@ mod test {
             .sort(),
             load_file_paths(None, "json", get_base_dir()).sort(),
         )
+    }
+
+    #[test]
+    fn get_command_names_list() {
+        assert_eq!(
+            get_command_names().sort(),
+            vec!["test_command", "test_command2"].sort(),
+        );
     }
 }
