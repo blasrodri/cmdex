@@ -1,0 +1,7 @@
+ {
+    "name": "less",
+    "description": "Get a list of the files that a zip archive contains ",
+    "value": "less file",
+    "platforms": ["Linux"],
+    "authors": "Blas Rodriguez Irizar <rodrigblas@gmail.com>"
+}
