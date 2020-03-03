@@ -1,0 +1,6 @@
+{
+    "name": "pkill",
+    "description": "Kill a process by its name (it allows spaces as well). In this example, we're killing Emacs",
+    "platforms": ["Linux"],
+    "value": "pkill emacs"
+}

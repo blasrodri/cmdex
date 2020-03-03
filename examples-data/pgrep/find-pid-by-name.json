@@ -1,0 +1,6 @@
+{
+    "name": "pgrep",
+    "description": "Find a proccess id (PID) by searching for using its name. pgrep uses grep under the hood, so regex are allowed. In this example, we are looking for the different PIDs for our Emacs running instances.",
+    "platforms": ["Linux"],
+    "value": "pgrep emacs"
+}

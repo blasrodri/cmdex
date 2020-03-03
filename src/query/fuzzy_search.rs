@@ -69,7 +69,7 @@ mod test {
             "../../examples-data/find/find-contains-filename-in-cwd.json"
         ))
         .to_string()];
-        let query = "name is foo.";
+        let query = "whose name is foo.";
         assert_eq!(
             fuzzy_search(
                 &CommandsDB::new(),
