@@ -1,0 +1,7 @@
+{
+    "name": "git",
+    "description": "Get a file from a commit",
+    "value": "git checkout -- <commit_id> <path_to_file> ",
+    "platforms": ["all"],
+    "authors": "Blas Rodriguez Irizar <rodrigblas@gmail.com>"
+}
