@@ -11,7 +11,7 @@ pub fn run() {
     let db = CommandsDB::new();
 
     let matches = App::new("Command Example")
-        .version("0.2.5")
+        .version("0.2.6")
         .setting(AppSettings::AllowMissingPositional)
         .author("Blas Rodriguez Irizar. <rodrigblas@gmail.com>")
         .about("Search for command examples directly on your command line")
