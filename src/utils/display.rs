@@ -34,7 +34,7 @@ fn display_ascii(ce: &CommandExample) -> String {
     format!(
         r#"{} - {}
 Platforms: {}
-{}
+Command: {}
 Authors: {}
 "#,
         name, description, platforms_str, value, authors
@@ -67,7 +67,7 @@ mod test {
 
         let expected_result = r#"tar - compress an entire directory
 Platforms: all
-tar -zvcf [result-filename.tar.gz] [path-of-directory-to-compress]
+Command: tar -zvcf [result-filename.tar.gz] [path-of-directory-to-compress]
 Authors: Blas Rodriguez Irizar <rodrigblas@gmail.com>
 "#;
         assert_eq!(
