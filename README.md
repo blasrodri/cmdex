@@ -37,9 +37,13 @@ sudo shutdown now
 Authors: Blas Rodriguez Irizar <rodrigblas@gmail.com>
 ```
 
-
 ## Goals
 - CLI Support 
 - HTTP Support 
 - Fuzzy search
 - User voting the effectiveness of an example
+
+## Contribute
+To add more examples, submit a PR. The only requirement is that the example does not exist.
+The _database_ is hosted in json files in the folder called `examples-data`. Add yours, inside
+a directory named like the command you're trying to include.

@@ -1,0 +1,7 @@
+{
+    "name": "tar",
+    "description": "Create a .tar.gz (tar gz) file from directory", 
+    "value": "tar cvfz <tar-file-name> <directory-path>",
+    "platforms": ["OS X"],
+    "authors": "Blas Rodriguez Irizar <rodrigblas@gmail.com>"
+}

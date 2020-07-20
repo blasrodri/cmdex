@@ -1,0 +1,7 @@
+{
+    "name": "tar",
+    "description": "Create a tar file from directory", 
+    "value": "tar cvf <tar-file-name> <directory-path>",
+    "platforms": ["OS X"],
+    "authors": "Blas Rodriguez Irizar <rodrigblas@gmail.com>"
+}
